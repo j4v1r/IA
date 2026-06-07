@@ -215,56 +215,32 @@ def mostrar_camino(camino):
 # ---------------------------------------
 # Programa principal
 # ---------------------------------------
-print("Ingrese las filas de las 8 reinas")
+if __name__ == "__main__":
+    
+    print("Ingrese las filas de las 8 reinas")
 
-tablero = list(
-    map(
-        int,
-        input(
-            "Ejemplo: 5 2 7 1 4 0 6 3\n> "
-        ).split()
+    tablero = list(
+        map(
+            int,
+            input(
+                "Ejemplo: 5 2 7 1 4 0 6 3\n> "
+            ).split()
+        )
     )
-)
 
-# Intentar desde el tablero del usuario
-solucion, exito, camino = hill_climbing(tablero)
-
-print("\n====================================")
-print("BÚSQUEDA DESDE EL TABLERO INGRESADO")
-print("====================================")
-
-mostrar_camino(camino)
-
-if exito:
+    # Intentar desde el tablero del usuario
+    solucion, exito, camino = hill_climbing(tablero)
 
     print("\n====================================")
-    print("SOLUCIÓN ENCONTRADA CON HILL CLIMBING")
+    print("BÚSQUEDA DESDE EL TABLERO INGRESADO")
     print("====================================")
 
-    print(solucion)
+    mostrar_camino(camino)
 
-    imprimir_tablero(solucion)
-
-else:
-
-    print("\n====================================")
-    print("ÓPTIMO LOCAL")
-    print(
-        f"Conflictos restantes: "
-        f"{heuristica(solucion)}"
-    )
-    print("====================================")
-
-    print(
-        "\nIniciando Random Restart..."
-    )
-
-    solucion = random_restart_hill_climbing()
-
-    if solucion:
+    if exito:
 
         print("\n====================================")
-        print("SOLUCIÓN ENCONTRADA CON RANDOM RESTART")
+        print("SOLUCIÓN ENCONTRADA CON HILL CLIMBING")
         print("====================================")
 
         print(solucion)
@@ -273,7 +249,33 @@ else:
 
     else:
 
+        print("\n====================================")
+        print("ÓPTIMO LOCAL")
         print(
-            "\nNo fue posible encontrar "
-            "una solución."
+            f"Conflictos restantes: "
+            f"{heuristica(solucion)}"
         )
+        print("====================================")
+
+        print(
+            "\nIniciando Random Restart..."
+        )
+
+        solucion = random_restart_hill_climbing()
+
+        if solucion:
+
+            print("\n====================================")
+            print("SOLUCIÓN ENCONTRADA CON RANDOM RESTART")
+            print("====================================")
+
+            print(solucion)
+
+            imprimir_tablero(solucion)
+
+        else:
+
+            print(
+                "\nNo fue posible encontrar "
+                "una solución."
+            )
