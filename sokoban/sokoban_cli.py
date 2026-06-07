@@ -167,7 +167,7 @@ class SokobanSolver:
         print()
 
 
-def main():
+def run():
     print("=== RESOLVEDOR SOKOBAN (Busqueda Informada A*) ===")
     print("\nINSTRUCCIONES:")
     print("Debes ingresar varias lineas que representan el tablero.")
@@ -244,4 +244,4 @@ def main():
         print("\n\nPrograma interrumpido por el usuario.")
 
 if __name__ == "__main__":
-    main()
+    run()
