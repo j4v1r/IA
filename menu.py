@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from sokoban.sokoban_cli import run as run_sokoban
 from frozenLake.frozenLake_cli import run as run_frozenLake
 from ochoReinas.ochoReinas_cli import run as run_ochoReinas
+from gato.gato_cli import run as run_gato
 
 def mostrarMenu():
     os.system('cls')
@@ -37,7 +38,7 @@ def main():
                     run_ochoReinas()
                 case "4":
                     os.system('cls')
-                    #run_gato()
+                    run_gato()
                 case "5":
                     print("\n  ¡Hasta luego!\n")
                     sys.exit(0)
