@@ -213,6 +213,113 @@ def mostrar_camino(camino):
 
 
 # ---------------------------------------
+# Recocido Simulado
+# ---------------------------------------
+def recocido_simulado(
+    tablero_inicial,
+    temperatura_inicial=100,
+    enfriamiento=0.995,
+    temperatura_minima=0.01,
+    max_iteraciones=10000
+):
+
+    actual = tablero_inicial.copy()
+
+    h_actual = heuristica(actual)
+
+    mejor = actual.copy()
+    mejor_h = h_actual
+
+    temperatura = temperatura_inicial
+
+    iteracion = 0
+
+    print("\n=== INICIO RECOCIDO SIMULADO ===")
+
+    while (
+        temperatura > temperatura_minima
+        and iteracion < max_iteraciones
+    ):
+
+        if mejor_h == 0:
+            break
+
+        vecinos = generar_vecinos(actual)
+
+        vecino = random.choice(vecinos)
+
+        h_vecino = heuristica(vecino)
+
+        delta = h_vecino - h_actual
+
+        print("\n--------------------------------")
+        print(f"ITERACIÓN {iteracion}")
+        print("--------------------------------")
+
+        print(f"Actual : {actual}")
+        print(f"h(actual) = {h_actual}")
+
+        print(f"\nVecino : {vecino}")
+        print(f"h(vecino) = {h_vecino}")
+
+        print(f"\nΔ = {delta}")
+        print(f"T = {temperatura:.4f}")
+
+        if delta < 0:
+
+            print("Movimiento MEJOR")
+            print("Aceptado automáticamente")
+
+            actual = vecino
+            h_actual = h_vecino
+
+        else:
+
+            p = math.exp(
+                -delta / temperatura
+            )
+
+            r = random.random()
+
+            print(f"P = e^(-Δ/T)")
+            print(f"P = {p:.6f}")
+            print(f"Random = {r:.6f}")
+
+            if r < p:
+
+                print("Movimiento PEOR aceptado")
+
+                actual = vecino
+                h_actual = h_vecino
+
+            else:
+
+                print("Movimiento rechazado")
+
+        if h_actual < mejor_h:
+
+            mejor = actual.copy()
+            mejor_h = h_actual
+
+            print(
+                f"\nNuevo mejor estado "
+                f"({mejor_h} conflictos)"
+            )
+
+        print("\nEstado actual:")
+        imprimir_tablero(actual)
+
+        temperatura *= enfriamiento
+
+        iteracion += 1
+
+    print("\n=== FIN DEL RECOCIDO ===")
+    print(f"Iteraciones: {iteracion}")
+    print(f"Mejor heurística: {mejor_h}")
+
+    return mejor, mejor_h
+
+# ---------------------------------------
 # Programa principal
 # ---------------------------------------
 if __name__ == "__main__":

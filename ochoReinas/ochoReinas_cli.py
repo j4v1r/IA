@@ -4,7 +4,7 @@ from ochoReinas.ochoReinas import (
     hill_climbing,
     mostrar_camino,
     random_restart_hill_climbing,
-    #recocido_simulado,
+    recocido_simulado,
     imprimir_tablero,
     heuristica
 )
@@ -138,7 +138,7 @@ def run():
             )
 
             solucion, conflictos = (
-                #recocido_simulado(tablero)
+                recocido_simulado(tablero)
             )
 
             if conflictos == 0:
