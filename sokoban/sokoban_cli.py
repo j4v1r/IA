@@ -1,4 +1,5 @@
 import heapq
+import os
 
 class SokobanSolver:
     def __init__(self, tablero_cadenas):
@@ -109,7 +110,7 @@ class SokobanSolver:
             total += min_dist
         return total
     
-    def resolver(self):
+    def resolver_a(self):
         start_state = (self.jugador, self.cajas, [])
         g_score = {(self.jugador, self.cajas): 0}
         f_score = {(self.jugador, self.cajas): self.heuristica(self.cajas)}
@@ -141,6 +142,32 @@ class SokobanSolver:
                     visitados.add(nuevo_estado)
         return None
     
+    def resolver_gbfs(self):
+        start_state = (self.jugador, self.cajas, [])
+        g_score = self.heuristica(self.cajas)
+        
+        open_set = [(g_score, start_state)]
+        heapq.heapify(open_set)
+        visitados = set()
+        visitados.add((self.jugador, self.cajas))
+        
+        while open_set:
+            _, (jugador, cajas, camino) = heapq.heappop(open_set)
+            
+            if self.es_meta(cajas):
+                return camino
+            
+            for nuevo_jug, nuevas_cajas, direccion, costo in self.movimientos_validos(jugador, cajas):
+                nuevo_estado = (nuevo_jug, nuevas_cajas)
+                if nuevo_estado in visitados:
+                    continue
+                
+                nuevo_camino = camino + [direccion]
+                g_tentativo = self.heuristica(nuevas_cajas)
+                heapq.heappush(open_set, (g_tentativo,(nuevo_jug, nuevas_cajas, nuevo_camino)))
+                visitados.add(nuevo_estado)
+        return None
+    
     def imprimir_tablero(self, jugador, cajas):
         tablero = [['.' for _ in range(self.ancho)] for _ in range(self.alto)]
         
@@ -165,6 +192,19 @@ class SokobanSolver:
         for y in range(self.alto):
             print(f"{y} " + " ".join(tablero[y]))
         print()
+
+def elegirAlgoritmo():
+    os.system('cls')
+    print("\nElige el algoritmo de búsqueda:")
+    print("1. GBFS (Greedy Best First Search)")
+    print("2. A*")
+    print("3. Regresar al menú anterior")
+    while True:
+        opcion = int(input("Opción: "))
+        if opcion in (1, 2, 3):
+            return opcion
+        else:
+            print("Opción no válida. Ingresa un número del 1 al 3.")
 
 
 def run():
@@ -195,14 +235,36 @@ def run():
                 continue
             break
         lineas.append(linea)
-    
+
     try:
-        solver = SokobanSolver(lineas)
+        solver = SokobanSolver(lineas)  
+    except ValueError as e:
+        print(f"Error: {e}")
+        input("\nPresiona cualquier tecla para continuar...")
+        return
+
+    dir_map = {
+        'arriba': (0, -1),
+        'abajo': (0, 1),
+        'izquierda': (-1, 0),
+        'derecha': (1, 0)
+    }
+    
+    while True:
+        opcion = elegirAlgoritmo()
+        os.system('cls')
+
         print("\n--- Configuracion inicial ---")
         solver.imprimir_tablero(solver.jugador, solver.cajas)
         
-        print("Buscando solucion con A*...")
-        solucion = solver.resolver()
+        if opcion == 2:
+            print("Buscando solución con A*...")
+            solucion = solver.resolver_a()
+        elif opcion == 3:
+            return
+        else:       
+            print("Buscando solución con BFS...")
+            solucion = solver.resolver_gbfs()
         
         if solucion is None:
             print("No se encontro solucion para este nivel.")
@@ -237,11 +299,7 @@ def run():
                 solver.imprimir_tablero(jugador_act, frozenset(cajas_act))
             
             print("\nSOLUCION COMPLETA - Todos los botones presionados")
-    
-    except ValueError as e:
-        print(f"Error: {e}")
-    except KeyboardInterrupt:
-        print("\n\nPrograma interrumpido por el usuario.")
+        input("\nPresiona cualquier tecla para continuar...")
 
 if __name__ == "__main__":
     run()

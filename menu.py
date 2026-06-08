@@ -11,7 +11,7 @@ from gato.gato_cli import run as run_gato
 def mostrarMenu():
     os.system('cls')
     print("=== RESOLVEDOR DE ALGORITMOS IA ===")
-    print("1. Frozen Lake (BFS/DFS) \n2. Sokoban (A*) \n3. 8 Reinas (Hill Climbing) \n4. Gato (Minimax/Poda Alfa-Beta) \n5. Salir")
+    print("1. Frozen Lake (BFS/DFS) \n2. Sokoban (GBFS/A*) \n3. 8 Reinas (Hill Climbing) \n4. Gato (Minimax/Poda Alfa-Beta) \n5. Salir")
 
 def pedirOpcion():
     while True:
