@@ -129,8 +129,8 @@ class frozenLakeSolver:
 def elegirAlgoritmo():
     os.system('cls')
     print("\nElige el algoritmo de búsqueda:")
-    print("1. GBFS (Greedy Best First Search - Encuentra el camino más corto)")
-    print("2. DFS (Búsqueda en Profundidad - Encuentra cualquier camino rápido)")
+    print("1. BFS (Búsqueda en Anchura)")
+    print("2. DFS (Búsqueda en Profundidad)")
     print("3. Regresar al menú anterior")
     while True:
         opcion = int(input("Opción: "))
@@ -173,6 +173,8 @@ def run():
         solver = frozenLakeSolver(lineas)  
     except ValueError as e:
         print(f"Error: {e}")
+        input("\nPresiona cualquier tecla para continuar...")
+        return
 
     dir_map = {
         'arriba': (0, -1),
@@ -216,7 +218,7 @@ def run():
                 solver.imprimir_tablero(jugador_act)
             
             print("\n¡META ALCANZADA!")
-            input("\nPresiona cualquier tecla para continuar...")
+        input("\nPresiona cualquier tecla para continuar...")
 
 if __name__ == "__main__":
     run()

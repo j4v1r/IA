@@ -1,4 +1,5 @@
 import random
+import os
 
 from ochoReinas.ochoReinas import (
     hill_climbing,
@@ -39,7 +40,7 @@ def leer_tablero():
 
 
 def menu_8_reinas():
-
+    os.system('cls')
     print("\n=== 8 REINAS ===")
     print("1. Hill Climbing")
     print("2. Recocido Simulado")

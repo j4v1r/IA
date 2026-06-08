@@ -11,7 +11,7 @@ from gato.gato_cli import run as run_gato
 def mostrarMenu():
     os.system('cls')
     print("=== RESOLVEDOR DE ALGORITMOS IA ===")
-    print("1. Frozen Lake (BFS/DFS) \n2. Sokoban (A*) \n3. 8 Reinas (Hill Climbing) \n4. Gato (Minimax) \n5. Salir")
+    print("1. Frozen Lake (BFS/DFS) \n2. Sokoban (A*) \n3. 8 Reinas (Hill Climbing) \n4. Gato (Minimax/Poda Alfa-Beta) \n5. Salir")
 
 def pedirOpcion():
     while True:
@@ -40,14 +40,12 @@ def main():
                     os.system('cls')
                     run_gato()
                 case "5":
-                    print("\n  ¡Hasta luego!\n")
                     sys.exit(0)
         except KeyboardInterrupt:
-            print("\n\n  Juego interrumpido.")
+            print("\n\nJuego interrumpido.")
  
         siguiente = mostrarMenu()
         if siguiente == "2":
-            print("¡Hasta luego!\n")
             sys.exit(0)
         # Si eligio 1, el ciclo while vuelve a mostrar el menu
  
