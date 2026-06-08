@@ -1,11 +1,12 @@
+import os
 from gato.gato import (
     jugar_minimax,
-    #jugar_alpha_beta
+    jugar_alpha_beta
 )
 
 
 def menu_gato():
-
+    os.system('cls')
     print("\n=== GATO ===")
     print("1. Jugar contra Minimax")
     print("2. Jugar contra Poda Alfa-Beta")
@@ -46,7 +47,7 @@ def run():
                 "\n=== PODA ALFA-BETA ==="
             )
 
-            #jugar_alpha_beta()
+            jugar_alpha_beta()
 
         input(
             "\nPresione ENTER para continuar..."
