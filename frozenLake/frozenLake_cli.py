@@ -1,7 +1,6 @@
 import heapq
 import collections
 import os
-import time
 
 class frozenLakeSolver:
     def __init__(self, tablero_cadenas):
@@ -130,7 +129,7 @@ class frozenLakeSolver:
 def elegirAlgoritmo():
     os.system('cls')
     print("\nElige el algoritmo de búsqueda:")
-    print("1. BFS (Búsqueda en Anchura - Encuentra el camino más corto)")
+    print("1. GBFS (Greedy Best First Search - Encuentra el camino más corto)")
     print("2. DFS (Búsqueda en Profundidad - Encuentra cualquier camino rápido)")
     print("3. Regresar al menú anterior")
     while True:
@@ -171,8 +170,7 @@ def run():
         lineas.append(linea)
 
     try:
-        solver = frozenLakeSolver(lineas)
-        
+        solver = frozenLakeSolver(lineas)  
     except ValueError as e:
         print(f"Error: {e}")
 
@@ -217,8 +215,8 @@ def run():
                 jugador_act = (jugador_act[0] + dx, jugador_act[1] + dy)
                 solver.imprimir_tablero(jugador_act)
             
-            print("\n¡META ALCANZADA! - El jugador cruzó el lago sin caer.")
-            time.sleep(2.5)
+            print("\n¡META ALCANZADA!")
+            input("\nPresiona cualquier tecla para continuar...")
 
 if __name__ == "__main__":
     run()
