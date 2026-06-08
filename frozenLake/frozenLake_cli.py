@@ -17,7 +17,7 @@ class frozenLakeSolver:
         self.ancho = len(tablero_cadenas[0]) if self.alto > 0 else 0
         
         self.holes = set()
-        self.goals = set()
+        self.goal = None
         self.jugador = None
         
         # Validar ancho consistente y mapear el entorno
@@ -28,7 +28,9 @@ class frozenLakeSolver:
                 if ch == 'H':
                     self.holes.add((x, y))
                 elif ch == 'G':
-                    self.goals.add((x, y))
+                    if self.goal is not None:
+                        raise ValueError("Solo puede existir una meta (G)")
+                    self.goal = (x, y)
                 elif ch == 'P':
                     if self.jugador is not None:
                         raise ValueError("Solo puede haber un punto de partida para el jugador (P)")
@@ -41,14 +43,13 @@ class frozenLakeSolver:
         if self.jugador is None:
             raise ValueError("Debe haber haber un punto de partida para el jugador (P)")
         
-        if len(self.goals) == 0:
-            raise ValueError("Debe haber al menos una meta (G)")
+        if self.goal is None:
+            raise ValueError("Debe haber exactamente una meta (G)")
         
         self.holes = frozenset(self.holes)
-        self.goals = frozenset(self.goals)
     
     def es_meta(self,  pos):
-        return pos in self.goals
+        return pos == self.goal
     
     def es_celda_valida(self, x, y):
         return (0 <= x < self.ancho and 0 <= y < self.alto and
@@ -112,8 +113,8 @@ class frozenLakeSolver:
         
         for hx, hy in self.holes:
             tablero[hy][hx] = 'H'
-        for gx, gy in self.goals:
-            tablero[gy][gx] = 'G'
+        gx, gy = self.goal
+        tablero[gy][gx] = 'G'
         
         jx, jy = jugador_pos
         if tablero[jy][jx] == 'G':
